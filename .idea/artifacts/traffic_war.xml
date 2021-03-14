@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="traffic:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>traffic</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="traffic-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="traffic:war exploded" />
+    </root>
+  </artifact>
+</component>
