@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.joda.time.DateTime.now;
 import static org.joda.time.DateTimeZone.UTC;
@@ -19,15 +20,15 @@ public class ClientRepository {
     @Autowired
     public ClientRepository(DeregisterScheduler deregisterScheduler){
         this.deregisterScheduler = deregisterScheduler;
-        this.registeredClients = new HashMap<>();
+        this.registeredClients = new ConcurrentHashMap<>();
     }
 
     public ClientRepository() {
-        registeredClients = new HashMap<>();
+        registeredClients = new ConcurrentHashMap<>();
     }
 
-    public void registerClient(String id, ClientPosition position) {
-        registeredClients.put(id, new RegisteredClient(id, position, now(UTC)));
+    public void registerClient(String id, ClientPosition position, String  notificationType) {
+        registeredClients.put(id, new RegisteredClient(id, position, now(UTC), notificationType));
         deregisterScheduler.scheduleClientDeregister(id, registeredClients);
     }
 
@@ -37,5 +38,13 @@ public class ClientRepository {
 
     public RegisteredClient getClient(String id) {
         return registeredClients.get(id);
+    }
+
+    public void deleteClient(String id) {
+        registeredClients.remove(id);
+    }
+
+    public Map<String, RegisteredClient> getClientMap() {
+        return registeredClients;
     }
 }

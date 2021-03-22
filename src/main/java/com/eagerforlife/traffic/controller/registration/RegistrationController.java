@@ -13,8 +13,8 @@ import java.security.InvalidParameterException;
 @RestController()
 public class RegistrationController {
 
-    private RegistrationService registrationService;
-    private ClientIdValidator clientIdValidator;
+    private final RegistrationService registrationService;
+    private final ClientIdValidator clientIdValidator;
 
     @Autowired
     public RegistrationController(RegistrationService registrationService) {
@@ -24,30 +24,44 @@ public class RegistrationController {
 
 
     @PostMapping("/traffic/notifications/register")
-    public void registerForNotifications(@RequestBody RegisterPositionRequest registerPositionRequest) {
-        System.out.println("POST: Received ID:" + registerPositionRequest);
-        String id = registerPositionRequest.getId();
-        validateId(id);
-        registrationService.registerClient(id, registerPositionRequest.toClientPosition());
+    public void registerForNotifications(@RequestBody RegisterClientRequest registerClientRequest) {
+        if(registerClientRequest == null){
+            throw new InvalidParameterException("Invalid RegisterClientRequest body");
+        }
+
+        final String id = registerClientRequest.getId();
+        String notificationType = validateId(id);
+        registrationService.registerClient(id, registerClientRequest.toClientPosition(), notificationType);
     }
 
 
     @DeleteMapping("/traffic/notifications/register")
     public void deleteNotificationRegistration(@RequestBody DeleteRegistrationRequest deleteRegistrationRequest) {
-        validateId(deleteRegistrationRequest.getId());
-        System.out.println("DELETE: Received ID:" + deleteRegistrationRequest.getId());
+        if(deleteRegistrationRequest == null){
+            throw new InvalidParameterException("Invalid DeleteRegistrationRequest body");
+        }
+
+        final String id = deleteRegistrationRequest.getId();
+        validateId(id);
+        registrationService.deleteRegistration(id);
+
     }
 
     /**
      * Validates whether or not the ID is in an acceptable email/phone number format
      *
-     * @param id The client ID to be registered
+     * @param id The ID to be validated
+     * @return "email" or "phone"
      */
-    private void validateId(String id) {
-        boolean ematch = clientIdValidator.validateEmailFormat(id);
-        boolean pmatch = clientIdValidator.validatePhoneNumberFormat(id);
-        if (ematch || pmatch) {
-            return;
+    private String validateId(String id) {
+        if(id != null) {
+            if (clientIdValidator.validateEmailFormat(id)) {
+                return ClientIdValidator.EMAIL;
+            }
+
+            if (clientIdValidator.validatePhoneNumberFormat(id)) {
+                return ClientIdValidator.PHONE;
+            }
         }
         throw new InvalidParameterException("ID must be a valid email address or phone number");
     }

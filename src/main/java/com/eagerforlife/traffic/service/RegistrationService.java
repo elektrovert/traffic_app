@@ -1,6 +1,6 @@
 package com.eagerforlife.traffic.service;
 
-import com.eagerforlife.traffic.client.TrafficMessageClient;
+import com.eagerforlife.traffic.client.traffic.TrafficMessageClient;
 import com.eagerforlife.traffic.repository.ClientPosition;
 import com.eagerforlife.traffic.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +18,8 @@ public class RegistrationService {
         this.clientRepository = clientRepository;
     }
 
-    public String getTrafficNotifications(String id){
-      return trafficMessageClient.getNotifications();
-    }
-
-    public void registerClient(String registrationId, ClientPosition clientPosition){
-        clientRepository.registerClient(registrationId, clientPosition);
-    }
-
-
-    public void updatePosition(String id, ClientPosition clientPosition) {
-        clientRepository.updateClientPosition(id, clientPosition);
+    public void registerClient(String registrationId, ClientPosition clientPosition, String notificationType){
+        clientRepository.registerClient(registrationId, clientPosition, notificationType);
     }
 
     public boolean isRegistered(String id) {
@@ -36,6 +27,9 @@ public class RegistrationService {
             return true;
         }
         return false;
+    }
 
+    public void deleteRegistration(String id) {
+        clientRepository.deleteClient(id);
     }
 }

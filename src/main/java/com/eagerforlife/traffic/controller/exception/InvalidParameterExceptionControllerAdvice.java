@@ -1,4 +1,4 @@
-package com.eagerforlife.traffic.controller.registration;
+package com.eagerforlife.traffic.controller.exception;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
@@ -26,6 +26,7 @@ public class InvalidParameterExceptionControllerAdvice extends ResponseEntityExc
     public ResponseEntity<Object> handleInvalidParameterExceptionControllerAdvice(final RuntimeException e, final WebRequest request) {
         request.setAttribute(RequestDispatcher.ERROR_STATUS_CODE, HttpStatus.BAD_REQUEST.value(), RequestAttributes.SCOPE_REQUEST);
         final Map<String, Object> errorAttributes = defaultErrorAttributes.getErrorAttributes(request, ErrorAttributeOptions.defaults());
+        errorAttributes.put("message", e.getMessage());
 
         return handleExceptionInternal(e, errorAttributes, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
