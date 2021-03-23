@@ -1,5 +1,5 @@
 # traffic_app
-Doro test
+  
 The project is currently a work in progress, as I have a very busy work schedule at the moment. 
 While I have had a lot of expereince writing these types of applications in the past, doing this test has made me realise how much of this work 
 has been abstracted away with custom frameworks and annotations at my current job.
