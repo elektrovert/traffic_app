@@ -21,11 +21,11 @@ public class NotificationService {
         this.twilioClient = new TwilioClient();
     }
 
-    public void sendEmailNotification(String email, TrafficMessage msg){
+    public void sendEmailNotification(String email, TrafficMessage msg) {
         sendGridClient.sendEmail(email, msg.toString());
     }
 
-    public void sendSmsNotification(String phoneNumber, TrafficMessage msg){
+    public void sendSmsNotification(String phoneNumber, TrafficMessage msg) {
         twilioClient.sendSMS(phoneNumber, msg.toString());
     }
 

@@ -28,16 +28,16 @@ public class NotificationScheduler {
     @Autowired
     public NotificationScheduler(ClientRepository clientRepository,
                                  NotificationService notificationService,
-                                 TrafficMessageClient trafficMessageClient){
+                                 TrafficMessageClient trafficMessageClient) {
         this.clientRepository = clientRepository;
         this.notificationService = notificationService;
         this.trafficMessageClient = trafficMessageClient;
         this.scheduledExecutorService = Executors.newScheduledThreadPool(4);
 
-        scheduledExecutorService.scheduleAtFixedRate(new ScheduledNotificationTask(), 1,10 , MINUTES);
+        scheduledExecutorService.scheduleAtFixedRate(new ScheduledNotificationTask(), 1, 10, MINUTES);
     }
 
-    private class ScheduledNotificationTask implements Runnable{
+    private class ScheduledNotificationTask implements Runnable {
 
         @Override
         public void run() {
@@ -46,21 +46,21 @@ public class NotificationScheduler {
             sendNotifications(clientMap, trafficMessages.getMessageList());
         }
 
-        private void sendNotifications(Map<String, RegisteredClient> clientMap, List<TrafficMessage> trafficMessages){
-            for(RegisteredClient client : clientMap.values()){
-                    trafficMessages.forEach(msg -> {
-                                if(isTrafficEventInRangeOfClient(client, msg)){
-                                    if(client.getNotificationType().equals(ClientIdValidator.EMAIL)){
-                                        notificationService.sendEmailNotification(client.getClientId(), msg);
-                                    }else{
-                                        notificationService.sendSmsNotification(client.getClientId(), msg);
-                                    }
-                                }
-                            });
+        private void sendNotifications(Map<String, RegisteredClient> clientMap, List<TrafficMessage> trafficMessages) {
+            for (RegisteredClient client : clientMap.values()) {
+                trafficMessages.forEach(msg -> {
+                    if (isTrafficEventInRangeOfClient(client, msg)) {
+                        if (client.getNotificationType().equals(ClientIdValidator.EMAIL)) {
+                            notificationService.sendEmailNotification(client.getClientId(), msg);
+                        } else {
+                            notificationService.sendSmsNotification(client.getClientId(), msg);
+                        }
+                    }
+                });
             }
         }
 
-        private boolean isTrafficEventInRangeOfClient(RegisteredClient client, TrafficMessage msg){
+        private boolean isTrafficEventInRangeOfClient(RegisteredClient client, TrafficMessage msg) {
             // distance within 6km (rounded)
             final double distance = 0.05;
             final double clientLat = client.getClientPosition().getLatitude();

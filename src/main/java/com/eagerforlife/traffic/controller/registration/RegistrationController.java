@@ -22,10 +22,9 @@ public class RegistrationController {
         this.clientIdValidator = new ClientIdValidator();
     }
 
-
     @PostMapping("/traffic/notifications/register")
     public void registerForNotifications(@RequestBody RegisterClientRequest registerClientRequest) {
-        if(registerClientRequest == null){
+        if (registerClientRequest == null) {
             throw new InvalidParameterException("Invalid RegisterClientRequest body");
         }
 
@@ -34,10 +33,9 @@ public class RegistrationController {
         registrationService.registerClient(id, registerClientRequest.toClientPosition(), notificationType);
     }
 
-
     @DeleteMapping("/traffic/notifications/register")
     public void deleteNotificationRegistration(@RequestBody DeleteRegistrationRequest deleteRegistrationRequest) {
-        if(deleteRegistrationRequest == null){
+        if (deleteRegistrationRequest == null) {
             throw new InvalidParameterException("Invalid DeleteRegistrationRequest body");
         }
 
@@ -54,7 +52,7 @@ public class RegistrationController {
      * @return "email" or "phone"
      */
     private String validateId(String id) {
-        if(id != null) {
+        if (id != null) {
             if (clientIdValidator.validateEmailFormat(id)) {
                 return ClientIdValidator.EMAIL;
             }

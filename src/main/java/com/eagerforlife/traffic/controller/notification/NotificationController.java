@@ -3,16 +3,21 @@ package com.eagerforlife.traffic.controller.notification;
 import com.eagerforlife.traffic.Utility.ClientIdValidator;
 import com.eagerforlife.traffic.service.NotificationService;
 import com.eagerforlife.traffic.service.RegistrationService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.security.InvalidParameterException;
 
+@Slf4j
 @RestController
 public class NotificationController {
     private final Logger logger = LoggerFactory.getLogger(NotificationController.class);
+
     private final RegistrationService registrationService;
     private final NotificationService notificationService;
     private final ClientIdValidator clientIdValidator;
@@ -31,7 +36,12 @@ public class NotificationController {
      */
     @PutMapping("/traffic/notifications")
     public void updatePosition(@RequestBody UpdatePositionRequest updatePositionRequest) {
-        notificationService.updatePosition(updatePositionRequest.getId(), updatePositionRequest.toClientPosition());
+        if (updatePositionRequest != null) {
+            final String id = updatePositionRequest.getId();
+            validateId(id);
+            notificationService.updatePosition(id, updatePositionRequest.toClientPosition());
+        }
+        throw new InvalidParameterException("Client is not registered");
     }
 
     /**

@@ -28,7 +28,7 @@ public class RegisteredClient {
         return registrationTime;
     }
 
-    public String getNotificationType(){
+    public String getNotificationType() {
         return notificationType;
     }
 

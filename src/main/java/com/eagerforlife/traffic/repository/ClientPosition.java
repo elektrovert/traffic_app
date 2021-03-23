@@ -1,8 +1,8 @@
 package com.eagerforlife.traffic.repository;
 
 public class ClientPosition {
-    private double latitude;
-    private double longitude;
+    private final double latitude;
+    private final double longitude;
 
     public ClientPosition(double latitude, double longitude){
         this.latitude = latitude;

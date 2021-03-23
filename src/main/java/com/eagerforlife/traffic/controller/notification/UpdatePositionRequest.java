@@ -3,8 +3,9 @@ package com.eagerforlife.traffic.controller.notification;
 import com.eagerforlife.traffic.repository.ClientPosition;
 
 public class UpdatePositionRequest {
+
     /**
-     * The Resistered ID of the client
+     * The Registered ID of the client
      * Must be a valid email address or phone number
      */
     private String id;

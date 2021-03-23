@@ -4,7 +4,6 @@ import com.eagerforlife.traffic.scheduler.DeregisterScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,7 +17,7 @@ public class ClientRepository {
     private DeregisterScheduler deregisterScheduler;
 
     @Autowired
-    public ClientRepository(DeregisterScheduler deregisterScheduler){
+    public ClientRepository(DeregisterScheduler deregisterScheduler) {
         this.deregisterScheduler = deregisterScheduler;
         this.registeredClients = new ConcurrentHashMap<>();
     }
@@ -27,7 +26,7 @@ public class ClientRepository {
         registeredClients = new ConcurrentHashMap<>();
     }
 
-    public void registerClient(String id, ClientPosition position, String  notificationType) {
+    public void registerClient(String id, ClientPosition position, String notificationType) {
         registeredClients.put(id, new RegisteredClient(id, position, now(UTC), notificationType));
         deregisterScheduler.scheduleClientDeregister(id, registeredClients);
     }
@@ -47,4 +46,5 @@ public class ClientRepository {
     public Map<String, RegisteredClient> getClientMap() {
         return registeredClients;
     }
+
 }

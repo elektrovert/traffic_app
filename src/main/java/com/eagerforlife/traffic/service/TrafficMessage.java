@@ -13,7 +13,7 @@ public class TrafficMessage {
     private final int priority;
 
     public TrafficMessage(LocalDateTime createdDate, String title, String description,
-                          float latitude, float longitude, String subcategory, int priority){
+                          float latitude, float longitude, String subcategory, int priority) {
         this.createdDate = createdDate;
         this.title = title;
         this.description = description;
@@ -47,7 +47,7 @@ public class TrafficMessage {
         return subcategory;
     }
 
-    public String toString(){
+    public String toString() {
         return new StringBuilder("Title:\n")
                 .append(title)
                 .append("Description:\n")

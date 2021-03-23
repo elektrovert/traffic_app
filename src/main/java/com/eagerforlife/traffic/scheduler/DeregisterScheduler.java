@@ -24,7 +24,6 @@ public class DeregisterScheduler {
     }
 
     private class ScheduledDeregisterTask implements Runnable {
-
         private final String id;
         private final Map<String, RegisteredClient> registeredClientMap;
 
