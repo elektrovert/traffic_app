@@ -35,4 +35,6 @@ public class RegisteredClient {
     public void setClientPosition(ClientPosition clientPosition) {
         this.clientPosition = clientPosition;
     }
+
+
 }

@@ -1,6 +1,6 @@
 package com.eagerforlife.traffic.controller.notification;
 
-import com.eagerforlife.traffic.Utility.ClientIdValidator;
+import com.eagerforlife.traffic.utility.ClientIdValidator;
 import com.eagerforlife.traffic.service.NotificationService;
 import com.eagerforlife.traffic.service.RegistrationService;
 import lombok.extern.slf4j.Slf4j;

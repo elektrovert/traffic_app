@@ -1,4 +1,4 @@
-package com.eagerforlife.traffic.Utility;
+package com.eagerforlife.traffic.utility;
 
 import java.util.regex.Pattern;
 

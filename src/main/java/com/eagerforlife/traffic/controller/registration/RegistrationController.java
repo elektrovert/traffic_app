@@ -1,6 +1,6 @@
 package com.eagerforlife.traffic.controller.registration;
 
-import com.eagerforlife.traffic.Utility.ClientIdValidator;
+import com.eagerforlife.traffic.utility.ClientIdValidator;
 import com.eagerforlife.traffic.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
